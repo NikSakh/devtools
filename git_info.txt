@@ -1,0 +1,19 @@
+git show --name-only HEAD
+commit 647958c1c92fae077b6952fc763ccc04949e4cb1 (HEAD -> feature/DV-3)
+Author: NikSakh <NikSakharow@gmail.com>
+Date:   Tue Jan 27 18:41:24 2026 +0300
+
+    feature commit
+
+src/main/java/ru/mentee/power/ProgressDemo.java
+
+ git --version
+git version 2.49.0.windows.1
+
+git status
+On branch feature/DV-3
+nothing to commit, working tree clean
+
+ git log --oneline
+647958c (HEAD -> feature/DV-3) feature commit
+8f6cecc (master) initial commit
