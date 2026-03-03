@@ -1,5 +1,8 @@
 README
 
+
+[![Java CI Pipeline](https://github.com/NikSakh/devtools/actions/workflows/ci.yml/badge.svg)](https://github.com/NikSakh/devtools/actions/workflows/ci.yml)
+
 Запустить задачи Gradle:
 
 Gradle Tool Window: откройте (View → Tool Windows → Gradle), дважды кликните run, build, test.
