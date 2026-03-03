@@ -9,6 +9,6 @@ class ProgressTrackerMainTest {
   @Test
   void testMainShouldExecuteWithoutExceptions() {
     assertDoesNotThrow(() -> ProgressTrackerMain.main(new String[0]),
-        "main метод должен выполняться без исключений");
+        "main метод должен выполняться без исключений.");
   }
 }
