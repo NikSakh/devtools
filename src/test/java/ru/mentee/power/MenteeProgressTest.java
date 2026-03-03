@@ -1,31 +1,81 @@
 package ru.mentee.power;
 
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
 
 class MenteeProgressTest {
 
-    @Test
-    void shouldFormatSummary_whenProgressCreated() {
-        MenteeProgress progress = new MenteeProgress("Максим", 1, 8);
+  @Test
+  void testConstructorShouldCreateObjectWithCorrectValues() {
+    String name = "Анна Иванова";
+    int sprintNumber = 3;
+    int plannedHours = 5;
 
-        String result = progress.summary();
+    MenteeProgress progress = new MenteeProgress(name, sprintNumber, plannedHours);
 
-        assertThat(result).isEqualTo("Sprint 1 → Максим: planned 8 h");
-    }
+    assertEquals(name, progress.menteeName());
+    assertEquals(sprintNumber, progress.sprintNumber());
+    assertEquals(plannedHours, progress.plannedHoursPerWeek());
+  }
 
-    @Test
-    void shouldDetectReadiness_whenHoursAboveThreshold() {
-        MenteeProgress progress = new MenteeProgress("Максим", 1, 4);
+  @Test
+  void testReadyForSprintShouldReturnTrueWhenPlannedHours3OrMore() {
+    MenteeProgress progress3 = new MenteeProgress("Иван", 1, 3);
+    MenteeProgress progress5 = new MenteeProgress("Мария", 2, 5);
+    MenteeProgress progress10 = new MenteeProgress("Сергей", 3, 10);
 
-        assertThat(progress.readyForSprint()).isTrue();
-    }
+    assertTrue(progress3.readyForSprint());
+    assertTrue(progress5.readyForSprint());
+    assertTrue(progress10.readyForSprint());
+  }
 
-    @Test
-    void shouldDetectLackOfReadiness_whenHoursBelowThreshold() {
-        MenteeProgress progress = new MenteeProgress("Максим", 1, 2);
+  @Test
+  void testReadyForSprintShouldReturnFalseWhenPlannedHoursLessThan3() {
+    MenteeProgress progress0 = new MenteeProgress("Ольга", 1, 0);
+    MenteeProgress progress1 = new MenteeProgress("Дмитрий", 2, 1);
+    MenteeProgress progress2 = new MenteeProgress("Елена", 3, 2);
 
-        assertThat(progress.readyForSprint()).isFalse();
-    }
+    assertFalse(progress0.readyForSprint());
+    assertFalse(progress1.readyForSprint());
+    assertFalse(progress2.readyForSprint());
+  }
+
+  @Test
+  void testSummaryShouldReturnFormattedStringWithCorrectValues() {
+    MenteeProgress progress = new MenteeProgress("Анна Петрова", 2, 6);
+
+    String result = progress.summary();
+
+    assertEquals("Sprint 2 → Анна Петрова: planned 6 h", result);
+  }
+
+  @Test
+  void testSummaryShouldHandleEdgeCases() {
+    MenteeProgress zeroHours = new MenteeProgress("Алексей", 1, 0);
+    MenteeProgress minReady = new MenteeProgress("Наталья", 5, 3);
+
+    assertEquals("Sprint 1 → Алексей: planned 0 h", zeroHours.summary());
+    assertEquals("Sprint 5 → Наталья: planned 3 h", minReady.summary());
+  }
+
+  @Test
+  void testEqualsShouldWorkCorrectlyForRecords() {
+    MenteeProgress p1 = new MenteeProgress("Иван", 1, 5);
+    MenteeProgress p2 = new MenteeProgress("Иван", 1, 5);
+    MenteeProgress p3 = new MenteeProgress("Мария", 1, 5);
+
+    assertTrue(p1.equals(p2));
+    assertFalse(p1.equals(p3));
+  }
+
+  @Test
+  void testHashCodeShouldBeSameForEqualObjects() {
+    MenteeProgress p1 = new MenteeProgress("Ольга", 2, 4);
+    MenteeProgress p2 = new MenteeProgress("Ольга", 2, 4);
+
+    assertEquals(p1.hashCode(), p2.hashCode());
+  }
 }
